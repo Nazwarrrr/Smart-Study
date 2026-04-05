@@ -12,6 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+$csrf = isset($_POST['_csrf_token']) ? (string) $_POST['_csrf_token'] : '';
+if (!verify_csrf_token($csrf)) {
+    header('Location: tugas.php?error=' . rawurlencode('Permintaan tidak valid. Silakan muat ulang halaman.'));
+    exit;
+}
+
 $id       = isset($_POST['id']) ? (int) $_POST['id'] : 0;
 $action   = isset($_POST['action']) ? trim($_POST['action']) : '';
 $redirect = isset($_POST['redirect']) ? trim($_POST['redirect']) : 'tugas';

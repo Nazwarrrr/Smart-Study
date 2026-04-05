@@ -1118,9 +1118,14 @@ body.page-fade-in {
   margin: 0 0 0.75rem;
 }
 
-.profil-card__note {
+.profil-card__info {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.profil-card__info p {
+  margin: 0.25rem 0;
 }
 
 .tips-list {

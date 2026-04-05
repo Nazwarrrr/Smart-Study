@@ -28,6 +28,7 @@ if ($id > 0) {
 
 $pageTitle = $task ? e($task['title']) . ' — Detail' : 'Tugas tidak ditemukan';
 $showCongrats = !empty($_GET['done']);
+$detailSuccess = !empty($_GET['success']);
 $detailError  = !empty($_GET['error']) ? urldecode($_GET['error']) : '';
 $navActive    = 'tugas';
 
@@ -43,7 +44,7 @@ if ($task) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?> — Smart Study Planner</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="page-fade-in" data-page="detail" data-show-congrats="<?php echo $showCongrats ? '1' : '0'; ?>">
@@ -54,6 +55,8 @@ if ($task) {
 
         <?php if ($detailError !== '') : ?>
             <div class="alert alert--error" role="alert"><?php echo e($detailError); ?></div>
+        <?php elseif ($detailSuccess) : ?>
+            <div class="alert alert--success" role="status">Perubahan tugas berhasil disimpan.</div>
         <?php endif; ?>
 
         <?php if (!$task) : ?>
@@ -109,8 +112,10 @@ if ($task) {
                 <?php endif; ?>
 
                 <div class="task-card__actions detail-actions">
+                    <a class="btn btn--outline" href="edit_tugas.php?id=<?php echo $tid; ?>">Edit</a>
                     <?php if (!$isDone) : ?>
                         <form action="update.php" method="post" class="form-inline">
+                            <input type="hidden" name="_csrf_token" value="<?php echo htmlspecialchars(get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                             <input type="hidden" name="id" value="<?php echo $tid; ?>">
                             <input type="hidden" name="action" value="selesai">
                             <input type="hidden" name="redirect" value="detail">
@@ -118,6 +123,7 @@ if ($task) {
                         </form>
                     <?php endif; ?>
                     <form action="hapus.php" method="post" data-confirm="Yakin ingin menghapus tugas ini?" class="form-inline">
+                        <input type="hidden" name="_csrf_token" value="<?php echo htmlspecialchars(get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                         <input type="hidden" name="id" value="<?php echo $tid; ?>">
                         <button type="submit" class="btn btn--danger">Hapus tugas</button>
                     </form>

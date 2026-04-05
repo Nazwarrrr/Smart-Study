@@ -18,15 +18,19 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $u = isset($_POST['username']) ? trim($_POST['username']) : '';
     $p = isset($_POST['password']) ? (string) $_POST['password'] : '';
+    $csrf = isset($_POST['_csrf_token']) ? (string) $_POST['_csrf_token'] : '';
 
-    if ($u === $LOGIN_USER && $p === $LOGIN_PASS) {
+    if (!verify_csrf_token($csrf)) {
+        $error = 'Permintaan tidak valid. Silakan muat ulang halaman.';
+    } elseif ($u === $LOGIN_USER && $p === $LOGIN_PASS) {
+        session_regenerate_id(true);
         $_SESSION['siswa_login'] = true;
         $_SESSION['siswa_nama']  = 'Siswa';
         header('Location: dashboard.php');
         exit;
+    } else {
+        $error = 'Username atau password salah.';
     }
-
-    $error = 'Username atau password salah.';
 }
 ?>
 <!DOCTYPE html>
@@ -35,13 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — Smart Study Planner</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="login-body">
     <div class="login-page">
         <div class="login-card">
-            <img class="login-card__logo" src="assets/img/logo.svg" alt="Logo Smart Study Planner" width="72" height="72">
+            <img class="login-card__logo" src="assets/img/logo.png" alt="Logo Smart Study Planner" width="72" height="72">
             <h1 class="login-card__title">Smart Study Planner</h1>
             <p class="login-card__subtitle"><span id="typing-text" data-text="Atur tugasmu dengan pintar."></span><span class="typing-cursor" aria-hidden="true">|</span></p>
 
@@ -50,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form class="login-form" method="post" action="login.php" autocomplete="on">
+                <input type="hidden" name="_csrf_token" value="<?php echo htmlspecialchars(get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required autocomplete="username" placeholder="Contoh: siswa">

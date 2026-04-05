@@ -17,7 +17,7 @@ $flashError = !empty($_GET['error']) ? urldecode($_GET['error']) : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Tugas — Smart Study Planner</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="page-fade-in" data-page="tambah">
@@ -38,6 +38,7 @@ $flashError = !empty($_GET['error']) ? urldecode($_GET['error']) : '';
         <section class="card card--form-tambah" aria-labelledby="form-judul">
             <h2 id="form-judul" class="card__title">Data tugas</h2>
             <form id="form-tambah" action="tambah.php" method="post" novalidate>
+                <input type="hidden" name="_csrf_token" value="<?php echo htmlspecialchars(get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="form-grid">
                     <!-- Judul (wajib) -->
                     <div class="form-group form-group--full">

@@ -68,7 +68,7 @@ $namaSiswa = !empty($_SESSION['siswa_nama']) ? $_SESSION['siswa_nama'] : 'Siswa'
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — Smart Study Planner</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="page-fade-in" data-page="dashboard">

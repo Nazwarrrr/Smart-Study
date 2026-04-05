@@ -11,6 +11,11 @@ require_once __DIR__ . '/includes/helpers.php';
 $navActive = 'profil';
 $nama      = !empty($_SESSION['siswa_nama']) ? $_SESSION['siswa_nama'] : 'Siswa';
 
+// Dummy profil siswa
+$sekolah = 'SMA Negeri 1 Jakarta';
+$kelas   = 'XII IPA 1';
+$jurusan = 'IPA';
+
 $dbError = null;
 $total   = 0;
 $selesai = 0;
@@ -50,7 +55,7 @@ $quoteHariIni = $quotes[array_rand($quotes)];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil — Smart Study Planner</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="page-fade-in" data-page="profil">
@@ -69,9 +74,14 @@ $quoteHariIni = $quotes[array_rand($quotes)];
         <?php endif; ?>
 
         <section class="card profil-card profil-card--hero">
-            <img class="profil-card__logo" src="assets/img/logo.svg" alt="" width="88" height="88">
+            <img class="profil-card__logo" src="assets/img/logo.png" alt="" width="88" height="88">
             <h2 class="profil-card__nama"><?php echo e($nama); ?></h2>
             <p class="profil-card__role">Peran: <strong>Siswa</strong> (akun demo)</p>
+            <div class="profil-card__info">
+                <p><strong>Sekolah:</strong> <?php echo e($sekolah); ?></p>
+                <p><strong>Kelas:</strong> <?php echo e($kelas); ?></p>
+                <p><strong>Jurusan:</strong> <?php echo e($jurusan); ?></p>
+            </div>
         </section>
 
         <?php if ($total === 0 && $dbError === null) : ?>

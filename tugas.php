@@ -56,7 +56,7 @@ $namaSiswa = !empty($_SESSION['siswa_nama']) ? $_SESSION['siswa_nama'] : 'Siswa'
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Tugas — Smart Study Planner</title>
-    <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="page-fade-in" data-page="tugas" data-show-congrats="<?php echo $showCongrats ? '1' : '0'; ?>">
@@ -124,8 +124,10 @@ $namaSiswa = !empty($_SESSION['siswa_nama']) ? $_SESSION['siswa_nama'] : 'Siswa'
                         </div>
                         <div class="task-card__actions">
                             <a class="btn btn--outline" href="detail.php?id=<?php echo $id; ?>">Detail</a>
+                            <a class="btn btn--outline" href="edit_tugas.php?id=<?php echo $id; ?>">Edit</a>
                             <?php if (!$isDone) : ?>
                                 <form action="update.php" method="post" class="form-inline">
+                                    <input type="hidden" name="_csrf_token" value="<?php echo htmlspecialchars(get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                                     <input type="hidden" name="action" value="selesai">
                                     <input type="hidden" name="redirect" value="tugas">
@@ -133,6 +135,7 @@ $namaSiswa = !empty($_SESSION['siswa_nama']) ? $_SESSION['siswa_nama'] : 'Siswa'
                                 </form>
                             <?php endif; ?>
                             <form action="hapus.php" method="post" data-confirm="Yakin ingin menghapus tugas ini?" class="form-inline">
+                                <input type="hidden" name="_csrf_token" value="<?php echo htmlspecialchars(get_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <button type="submit" class="btn btn--danger">Hapus</button>
                             </form>
